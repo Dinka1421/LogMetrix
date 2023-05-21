@@ -1,17 +1,63 @@
 package org.tvz.logmetrix.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.tvz.logmetrix.entity.Filter;
+import org.tvz.logmetrix.service.FilterService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("filters")
 public class FilterController {
 	
+	private final FilterService filterService;
+	
+	@Autowired
+	public FilterController(FilterService filterService) {
+		this.filterService = filterService;
+	}
+
+
 	@GetMapping
-	public ResponseEntity<String> getFilters() {
-		return new ResponseEntity<>("hello", HttpStatus.OK);
+	public ResponseEntity<List<Filter>> getFilters() {
+
+		var filters = filterService.getFilters();
+
+		return filters.isEmpty() ?
+				new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+				new ResponseEntity<>(filters, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<Void> deleteFilter(@PathVariable("id") Long id) {
+
+		boolean isDeleted = filterService.deleteFilter(id);
+
+		return isDeleted ?
+				new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+				new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@PostMapping
+	public ResponseEntity<Filter> addFilter(@RequestBody Filter filter) {
+
+		var addedFilter = filterService.addFilter(filter);
+
+		return addedFilter == null ?
+				new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+				new ResponseEntity<>(addedFilter, HttpStatus.CREATED);
+	}
+	
+	@PutMapping
+	public ResponseEntity<Filter> updateFilter(@RequestBody Filter filter) {
+
+		var updatedFilter = filterService.updateFilter(filter);
+
+		return updatedFilter == null ?
+				new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+				new ResponseEntity<>(updatedFilter, HttpStatus.OK);
 	}
 }

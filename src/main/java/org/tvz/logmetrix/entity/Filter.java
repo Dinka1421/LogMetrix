@@ -35,6 +35,7 @@ public class Filter {
 		}
 	}
 	
+	private Long id;
 	private Log log;
 	private Environment environment;
 	private Client client;
