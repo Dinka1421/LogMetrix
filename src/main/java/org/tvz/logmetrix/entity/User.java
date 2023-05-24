@@ -1,16 +1,27 @@
 package org.tvz.logmetrix.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
 
+    @Id
+    @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;
     private String username;
     private String email;
 
+    public User() {}
+    
     public User(Long id, String firstName, String lastName, String username, String email) {
         this.id = id;
         this.firstName = firstName;

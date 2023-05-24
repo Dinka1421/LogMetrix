@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.tvz.logmetrix.entity.User;
 import org.tvz.logmetrix.service.UserService;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -20,25 +18,26 @@ public class UserController {
     public UserController(UserService userService){ this.userService = userService; }
 
     @GetMapping
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return userService.getUsers();
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
-    public void deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        boolean isDeleted = userService.deleteUser(id);
+
+        return isDeleted ?
+                new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       
     }
 
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody User user) {
-        Optional<User> addedUser = userService.addUser(user);
-
-        if (addedUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(addedUser.get());
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
+        var addedUser = userService.addUser(user);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedUser);
     }
 
     @PutMapping
