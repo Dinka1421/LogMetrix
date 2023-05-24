@@ -1,5 +1,6 @@
 package org.tvz.logmetrix.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Filter {
 
 	public enum Log {
@@ -35,10 +37,20 @@ public class Filter {
 		}
 	}
 	
+	@Id
+	@GeneratedValue
 	private Long id;
+	
+	@Enumerated(EnumType.STRING)
 	private Log log;
+	
+	@Enumerated(EnumType.STRING)
 	private Environment environment;
+	
+	@Enumerated(EnumType.STRING)
 	private Client client;
+	
 	private LocalDate startDate;
+	
 	private LocalDate endDate;
 }
