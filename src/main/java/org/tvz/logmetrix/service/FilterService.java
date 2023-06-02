@@ -1,3 +1,4 @@
+/*
 package org.tvz.logmetrix.service;
 
 import org.tvz.logmetrix.dto.FilterDTO;
@@ -11,3 +12,4 @@ public interface FilterService {
 	FilterDTO addFilter(FilterDTO filter);
 	FilterDTO updateFilter(FilterDTO filter);
 }
+*/

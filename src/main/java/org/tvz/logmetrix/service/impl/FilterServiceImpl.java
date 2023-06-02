@@ -1,3 +1,4 @@
+/*
 package org.tvz.logmetrix.service.impl;
 
 
@@ -48,3 +49,4 @@ public class FilterServiceImpl implements FilterService {
 		return filterMapper.toDTO(filterRepo.save(newFilter));
 	}
 }
+*/

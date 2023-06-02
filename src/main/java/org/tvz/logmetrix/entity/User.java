@@ -1,9 +1,6 @@
 package org.tvz.logmetrix.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,11 +10,23 @@ import java.util.Objects;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+
+    @Column(name="first_name", length = 250)
     private String firstName;
+
+
+    @Column(name="last_name", length = 250)
     private String lastName;
+
+
+    @Column(length = 100, unique = true)
     private String username;
+
+
+    @Column(length = 100)
     private String email;
 
     public User() {}
@@ -28,6 +37,9 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.username = username;
         this.email = email;
+    }
+
+    public User(Long id, String firstName, String lastName, String username) {
     }
 
     public Long getId() {
