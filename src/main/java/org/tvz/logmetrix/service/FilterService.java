@@ -1,3 +1,4 @@
+/*
 package org.tvz.logmetrix.service;
 
 import org.tvz.logmetrix.entity.Filter;
@@ -11,3 +12,4 @@ public interface FilterService {
 	Filter addFilter(Filter filter);
 	Filter updateFilter(Filter filter);
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package org.tvz.logmetrix.service.impl;
 
 
@@ -43,3 +44,4 @@ public class FilterServiceImpl implements FilterService {
 		return filterRepo.save(filter);
 	}
 }
+*/
