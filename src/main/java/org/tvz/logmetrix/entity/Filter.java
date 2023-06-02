@@ -1,4 +1,3 @@
-/*
 package org.tvz.logmetrix.entity;
 
 import jakarta.persistence.*;
@@ -56,4 +55,3 @@ public class Filter {
 	
 	private LocalDate endDate;
 }
-*/

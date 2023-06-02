@@ -1,4 +1,3 @@
-/*
 package org.tvz.logmetrix.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +61,3 @@ public class FilterController {
 				new ResponseEntity<>(updatedFilter, HttpStatus.OK);
 	}
 }
-*/
