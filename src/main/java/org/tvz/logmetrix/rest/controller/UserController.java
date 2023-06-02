@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.tvz.logmetrix.entity.User;
+import org.tvz.logmetrix.dto.UserDTO;
 import org.tvz.logmetrix.service.UserService;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class UserController {
     public UserController(UserService userService){ this.userService = userService; }
 
     @GetMapping
-    public List<User> getUsers() {
+    public List<UserDTO> getUsers() {
         return userService.getUsers();
     }
 
@@ -34,16 +34,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        var addedUser = userService.addUser(user);
-        
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedUser);
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+        userService.addUser(userDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        var updatedUser = userService.updateUser(user);
-        return ResponseEntity.status(updatedUser == null ? HttpStatus.NOT_FOUND : HttpStatus.OK)
-                .body(updatedUser);
+    @PutMapping("{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        userService.updateUser(userDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 }

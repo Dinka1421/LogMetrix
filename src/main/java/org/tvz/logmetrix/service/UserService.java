@@ -1,12 +1,14 @@
 package org.tvz.logmetrix.service;
 
-import org.tvz.logmetrix.entity.User;
+import org.springframework.stereotype.Service;
+import org.tvz.logmetrix.dto.UserDTO;
 
 import java.util.List;
 
+@Service
 public interface UserService {
-    List<User> getUsers();
+    List<UserDTO> getUsers();
     boolean deleteUser(Long id);
-    User addUser(User user);
-    User updateUser(User user);
+    void addUser(UserDTO userDTO);
+    void updateUser(UserDTO userDTO);
 }
