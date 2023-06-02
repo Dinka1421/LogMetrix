@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.tvz.logmetrix.entity.Filter;
 import org.tvz.logmetrix.repo.FilterRepository;
 import org.tvz.logmetrix.service.FilterService;
+import org.tvz.logmetrix.service.mapper.FilterMapper;
 
 import java.util.List;
 
@@ -13,10 +14,12 @@ import java.util.List;
 public class FilterServiceImpl implements FilterService {
 	
 	private final FilterRepository filterRepo;
+	private final FilterMapper filterMapper;
 
 	@Autowired
-	public FilterServiceImpl(FilterRepository filterRepo) {
+	public FilterServiceImpl(FilterRepository filterRepo, FilterMapper filterMapper) {
 		this.filterRepo = filterRepo;
+		this.filterMapper = filterMapper;
 	}
 
 	@Override
