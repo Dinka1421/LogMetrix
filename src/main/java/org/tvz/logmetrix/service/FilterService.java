@@ -1,13 +1,13 @@
 package org.tvz.logmetrix.service;
 
-import org.tvz.logmetrix.entity.Filter;
+import org.tvz.logmetrix.dto.FilterDTO;
 
 import java.util.List;
 
 public interface FilterService {
 	
-	List<Filter> getFilters();
+	List<FilterDTO> getFilters();
 	boolean deleteFilter(Long id);
-	Filter addFilter(Filter filter);
-	Filter updateFilter(Filter filter);
+	FilterDTO addFilter(FilterDTO filter);
+	FilterDTO updateFilter(FilterDTO filter);
 }

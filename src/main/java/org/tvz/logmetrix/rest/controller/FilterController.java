@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.tvz.logmetrix.entity.Filter;
+import org.tvz.logmetrix.dto.FilterDTO;
 import org.tvz.logmetrix.service.FilterService;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class FilterController {
 
 
 	@GetMapping
-	public ResponseEntity<List<Filter>> getFilters() {
+	public ResponseEntity<List<FilterDTO>> getFilters() {
 
 		var filters = filterService.getFilters();
 
@@ -42,7 +42,7 @@ public class FilterController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Filter> addFilter(@RequestBody Filter filter) {
+	public ResponseEntity<FilterDTO> addFilter(@RequestBody FilterDTO filter) {
 
 		var addedFilter = filterService.addFilter(filter);
 
@@ -52,7 +52,7 @@ public class FilterController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Filter> updateFilter(@RequestBody Filter filter) {
+	public ResponseEntity<FilterDTO> updateFilter(@RequestBody FilterDTO filter) {
 
 		var updatedFilter = filterService.updateFilter(filter);
 
