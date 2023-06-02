@@ -1,13 +1,20 @@
 package org.tvz.logmetrix.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-public class FilterDTO {
+@AllArgsConstructor
+public class FilterDTO implements Serializable {
+	
+	@Serial
+	private static final long serialVersionUID = 1111L;
 
 	public enum LogDTO {
 		SYSTEM, DEBUG, ERROR, DATA
