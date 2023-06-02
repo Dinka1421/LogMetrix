@@ -1,3 +1,4 @@
+/*
 package org.tvz.logmetrix.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,3 +48,4 @@ public class UserController {
                 .body(updatedUser);
     }
 }
+*/

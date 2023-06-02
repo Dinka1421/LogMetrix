@@ -8,12 +8,12 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users")
+//@Entity
+//@Table(name = "users")
 public class User implements Serializable {
 
-    @Id
-    @GeneratedValue
+//    @Id
+//    @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;

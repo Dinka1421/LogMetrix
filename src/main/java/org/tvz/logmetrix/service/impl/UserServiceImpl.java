@@ -1,3 +1,4 @@
+/*
 package org.tvz.logmetrix.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,3 +43,4 @@ public class UserServiceImpl implements UserService {
 
 
 }
+*/
