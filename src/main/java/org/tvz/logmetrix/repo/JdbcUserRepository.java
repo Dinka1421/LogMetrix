@@ -1,6 +1,5 @@
 package org.tvz.logmetrix.repo;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -13,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Primary
 @Repository
-
-public class JdbcUserRepository implements UserRepository {
+public class JdbcUserRepository implements CustomUserRepository {
 
     private JdbcTemplate jdbc;
     private final SimpleJdbcInsert inserter;
@@ -89,6 +86,7 @@ public class JdbcUserRepository implements UserRepository {
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
         user.setPassword(rs.getString("password"));
+//        user.setAuthorities(rs.getString("authorities"));
         return user;
     }
 

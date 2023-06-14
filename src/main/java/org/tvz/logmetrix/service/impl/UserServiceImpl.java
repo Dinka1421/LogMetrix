@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.tvz.logmetrix.dto.UserDTO;
 import org.tvz.logmetrix.entity.Authority;
 import org.tvz.logmetrix.entity.User;
-import org.tvz.logmetrix.repo.UserRepository;
+import org.tvz.logmetrix.repo.CustomUserRepository;
 import org.tvz.logmetrix.service.UserService;
 
 import java.util.List;
@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepo;
+    private final CustomUserRepository userRepo;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepo) {
+    public UserServiceImpl(CustomUserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
