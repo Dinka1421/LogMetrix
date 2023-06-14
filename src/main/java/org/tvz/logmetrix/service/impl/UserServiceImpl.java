@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.tvz.logmetrix.dto.UserDTO;
 import org.tvz.logmetrix.entity.Authority;
 import org.tvz.logmetrix.entity.User;
-import org.tvz.logmetrix.repo.CustomUserRepository;
+import org.tvz.logmetrix.repo.UserRepository;
 import org.tvz.logmetrix.service.UserService;
 
 import java.util.List;
@@ -15,33 +15,34 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final CustomUserRepository userRepo;
+    private final UserRepository userRepo;
 
     @Autowired
-    public UserServiceImpl(CustomUserRepository userRepo) {
+    public UserServiceImpl(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
     @Override
     public List<UserDTO> getUsers() {
-        return userRepo.getUsers().stream().map(this::mapUserToDTO).collect(Collectors.toList());
+        return userRepo.findAll().stream().map(this::mapUserToDTO).collect(Collectors.toList());
     }
 
     @Override
     public boolean deleteUser(Long id) {
-        return userRepo.deleteUser(id);
+        userRepo.deleteById(id);
+        return true;
     }
 
     @Override
     public void addUser(UserDTO userDTO) {
         User user = mapDTOToUser(userDTO);
-        userRepo.addUser(user);
+        userRepo.save(user);
     }
 
     @Override
     public void updateUser(UserDTO userDTO) {
         User user = mapDTOToUser(userDTO);
-        userRepo.updateUser(user);
+        userRepo.save(user);
     }
 
     @Override
@@ -65,6 +66,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
+        // todo map authorities
         return user;
     }
 }
