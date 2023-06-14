@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS users (
-    id IDENTITY,
-    email VARCHAR(100),
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    username VARCHAR(100)
+create table if not exists users (
+    id       identity,
+    username varchar(100) not null,
+    password varchar(250) not null,
+    first_name varchar(250) not null,
+    last_name varchar(250) not null
 );
 
 drop table if exists filters cascade; 
@@ -17,4 +17,15 @@ create table filters (
   environment varchar(255) check (environment in ('DEV','TEST','INT','PROD')), 
   log varchar(255) check (log in ('SYSTEM','DEBUG','ERROR','DATA')), 
   primary key (id)
+);
+create table if not exists authority (
+    id   identity,
+    name varchar(100) not null
+);
+
+create table if not exists user_authority (
+  user_id bigint not null,
+  authority_id bigint not null,
+  constraint fk_user foreign key (user_id) references users(id),
+  constraint fk_authority foreign key (authority_id) references authority(id)
 );

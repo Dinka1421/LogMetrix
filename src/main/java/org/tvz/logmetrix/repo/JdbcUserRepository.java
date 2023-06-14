@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Primary
 @Repository
@@ -43,7 +44,7 @@ public class JdbcUserRepository implements UserRepository {
         parameters.put("username", user.getUsername());
         parameters.put("first_name", user.getFirstName());
         parameters.put("last_name", user.getLastName());
-        parameters.put("email", user.getEmail());
+        parameters.put("password", user.getPassword());
 
         Number generatedId = inserter.executeAndReturnKey(parameters);
         if (generatedId != null) {
@@ -55,13 +56,13 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public User updateUser(User user) {
-        String sql = "UPDATE users SET username = ?, first_name = ?, last_name = ?, email = ? WHERE id = ?";
+        String sql = "UPDATE users SET username = ?, first_name = ?, last_name = ?, password = ? WHERE id = ?";
         int affectedRows = jdbc.update(
                 sql,
                 user.getUsername(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getEmail(),
+                user.getPassword(),
                 user.getId()
         );
 
@@ -71,14 +72,24 @@ public class JdbcUserRepository implements UserRepository {
         return null;
     }
 
+    @Override
+    public Optional<User> findOneByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        List<User> users = jdbc.query(sql, this::mapRowToUser, username);
+        if (!users.isEmpty()) {
+            return Optional.of(users.get(0));
+        }
+        return Optional.empty();
+    }
+
     private User mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
-        return new User(
-                rs.getLong("id"),
-                rs.getString("username"),
-                rs.getString("first_name"),
-                rs.getString("last_name"),
-                rs.getString("email")
-        );
+        User user = new User();
+        user.setId(rs.getLong("id"));
+        user.setUsername(rs.getString("username"));
+        user.setFirstName(rs.getString("first_name"));
+        user.setLastName(rs.getString("last_name"));
+        user.setPassword(rs.getString("password"));
+        return user;
     }
 
 

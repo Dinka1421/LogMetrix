@@ -2,36 +2,21 @@ package org.tvz.logmetrix.dto;
 
 import org.tvz.logmetrix.entity.User;
 
+import java.util.Set;
+
 public class UserDTO {
 
     private Long id;
-    private String firstName;
-    private String lastName;
+
     private String username;
-    private String email;
 
-    public UserDTO(Long id, String firstName, String lastName, String username,String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.email = email;
-    }
+    private String firstName;
 
-    public String getEmail() {
-        return email;
-    }
+    private String lastName;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private Set<String> authorities;
 
-    public UserDTO(User user) {
-        this.id = user.getId();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.username = user.getUsername();
-        this.email = user.getEmail();
+    public UserDTO() {
     }
 
     public Long getId() {
@@ -40,6 +25,14 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -58,11 +51,11 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
+    public Set<String> getAuthorities() {
+        return authorities;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
     }
 }

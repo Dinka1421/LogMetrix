@@ -3,11 +3,13 @@ package org.tvz.logmetrix.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tvz.logmetrix.dto.UserDTO;
+import org.tvz.logmetrix.entity.Authority;
 import org.tvz.logmetrix.entity.User;
 import org.tvz.logmetrix.repo.UserRepository;
 import org.tvz.logmetrix.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,17 +44,27 @@ public class UserServiceImpl implements UserService {
         userRepo.updateUser(user);
     }
 
+    @Override
+    public Optional<UserDTO> findByUsername(String username) {
+        return userRepo.findOneByUsername(username).map(this::mapUserToDTO);
+    }
+
     private UserDTO mapUserToDTO(final User user){
-        return new UserDTO(user.getId(), user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setAuthorities(user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
+        return userDTO;
     }
 
     private User mapDTOToUser(UserDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());
+        user.setUsername(userDTO.getUsername());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
         return user;
     }
 }
