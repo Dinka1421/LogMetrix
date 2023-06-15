@@ -3,14 +3,12 @@ package org.tvz.logmetrix.repo;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.tvz.logmetrix.entity.Authority;
 import org.tvz.logmetrix.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class JdbcUserRepository implements CustomUserRepository {
@@ -86,7 +84,18 @@ public class JdbcUserRepository implements CustomUserRepository {
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
         user.setPassword(rs.getString("password"));
-//        user.setAuthorities(rs.getString("authorities"));
+        String authoritiesString = rs.getString("authorities");
+
+        if (authoritiesString != null && !authoritiesString.isEmpty()) {
+            String[] authorities = authoritiesString.split(",");
+            Set<Authority> authoritySet = new HashSet<>();
+            for (String authority : authorities) {
+                Authority authorityObj = new Authority();
+                authorityObj.setName(authority.trim());
+                authoritySet.add(authorityObj);
+            }
+            user.setAuthorities(authoritySet);
+        }
         return user;
     }
 

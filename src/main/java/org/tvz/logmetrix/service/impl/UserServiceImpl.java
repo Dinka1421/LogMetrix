@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.tvz.logmetrix.dto.UserDTO;
 import org.tvz.logmetrix.entity.Authority;
 import org.tvz.logmetrix.entity.User;
+import org.tvz.logmetrix.repo.AuthorityRepository;
 import org.tvz.logmetrix.repo.UserRepository;
 import org.tvz.logmetrix.service.UserService;
 
@@ -16,11 +17,14 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepo;
+    private final AuthorityRepository authorityRepo;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepo) {
+    public UserServiceImpl(UserRepository userRepo, AuthorityRepository authorityRepo) {
         this.userRepo = userRepo;
+        this.authorityRepo = authorityRepo;
     }
+
 
     @Override
     public List<UserDTO> getUsers() {
@@ -66,7 +70,12 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        // todo map authorities
+        user.setAuthorities(
+                userDTO.getAuthorities().stream()
+                        .map(authorityName -> {
+                            return authorityRepo.findByName(authorityName).orElseThrow();
+                        })
+                        .collect(Collectors.toSet()));
         return user;
     }
 }
