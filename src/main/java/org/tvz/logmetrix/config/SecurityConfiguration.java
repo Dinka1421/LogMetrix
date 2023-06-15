@@ -38,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers(HttpMethod.POST, "/users")
             .antMatchers("/h2-console/**", "/api/authenticate",
                 "/swagger*/**",
                 "/configuration/ui",
