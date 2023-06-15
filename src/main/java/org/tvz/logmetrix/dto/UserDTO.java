@@ -14,6 +14,9 @@ public class UserDTO {
 
     private String lastName;
 
+    private String password;
+
+
     private Set<String> authorities;
 
     public UserDTO() {
@@ -49,6 +52,14 @@ public class UserDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Set<String> getAuthorities() {
