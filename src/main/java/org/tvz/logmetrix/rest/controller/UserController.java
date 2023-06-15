@@ -3,6 +3,7 @@ package org.tvz.logmetrix.rest.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.tvz.logmetrix.dto.UserDTO;
 import org.tvz.logmetrix.service.UserService;
@@ -24,6 +25,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         boolean isDeleted = userService.deleteUser(id);
 
