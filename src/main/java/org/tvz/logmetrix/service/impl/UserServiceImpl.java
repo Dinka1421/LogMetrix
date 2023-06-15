@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setUsername(user.getUsername());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
+        userDTO.setLastName(user.getPassword());
         userDTO.setAuthorities(user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
         return userDTO;
     }
@@ -70,6 +71,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
+        user.setPassword(userDTO.getPassword());
         user.setAuthorities(
                 userDTO.getAuthorities().stream()
                         .map(authorityName -> {
