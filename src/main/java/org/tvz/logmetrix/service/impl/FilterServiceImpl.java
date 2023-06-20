@@ -31,7 +31,8 @@ public class FilterServiceImpl implements FilterService {
 	public boolean deleteFilter(Long id) {
 		boolean exists = filterRepo.existsById(id);
 		
-		filterRepo.deleteById(id);
+		if (exists)
+			filterRepo.deleteById(id);
 		
 		return exists;
 	}
