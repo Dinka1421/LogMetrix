@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.tvz.logmetrix.util.TestContextConfig;
 
 @ContextConfiguration(classes = TestContextConfig.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest
 @WithMockUser
 public class BaseControllerTest {
