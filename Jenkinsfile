@@ -12,12 +12,6 @@ pipeline {
       steps {
         sh 'mvn test'
       }
-
-      post {
-        always {
-          handleResult(currentBuild.result)
-        }
-      }
     }
   }
 
@@ -25,16 +19,5 @@ pipeline {
     always {
       cleanWs()
     }
-  }
-
-}
-
-def handleResult(result) {
-  if (result == 'SUCCESS') {
-    updateGitlabCommitStatus name: STAGE_NAME, state: 'success'
-  } else if (result == 'FAILURE') {
-    updateGitlabCommitStatus name: STAGE_NAME, state: 'failed'
-  } else if (result == 'FIXED') {
-    updateGitlabCommitStatus name: STAGE_NAME, state: 'fixed'
   }
 }
