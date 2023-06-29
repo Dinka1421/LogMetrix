@@ -11,7 +11,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class FilterPrintJob extends QuartzJobBean {
+public class FilterStatusJob extends QuartzJobBean {
 
     private static final String FILTERS_JMS_QUEUE = "tvz.logmetrix.filters";
     
@@ -19,7 +19,7 @@ public class FilterPrintJob extends QuartzJobBean {
 
     private final JmsTemplate jmsTemplate;
     
-    public FilterPrintJob(FilterRepository filterRepository, JmsTemplate jmsTemplate) {
+    public FilterStatusJob(FilterRepository filterRepository, JmsTemplate jmsTemplate) {
         this.filterRepository = filterRepository;
         this.jmsTemplate = jmsTemplate;
     }
