@@ -5,7 +5,11 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '3'))
   }
-
+  
+  tools {
+    jdk 'OpenJDK'
+  }
+  
   stages {
     stage("test") {
 
