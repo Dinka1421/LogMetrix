@@ -6,12 +6,6 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '3'))
   }
 
-  tools {
-    maven 'mvn'
-    jdk 'Zulu OpenJDK 11'
-  }
-
-
   stages {
     stage("test") {
 
