@@ -1,9 +1,8 @@
-package org.tvz.logmetrix.service.jobs;
+package org.tvz.logmetrix.process.jobs;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.tvz.logmetrix.entity.Filter;
 import org.tvz.logmetrix.repo.FilterRepository;
@@ -14,12 +13,15 @@ import java.util.Map;
 
 public class FilterPrintJob extends QuartzJobBean {
 
-    private static final Logger log = LoggerFactory.getLogger(FilterPrintJob.class);
-
+    private static final String FILTERS_JMS_QUEUE = "tvz.logmetrix.filters";
+    
     private final FilterRepository filterRepository;
 
-    public FilterPrintJob(FilterRepository filterRepository) {
+    private final JmsTemplate jmsTemplate;
+    
+    public FilterPrintJob(FilterRepository filterRepository, JmsTemplate jmsTemplate) {
         this.filterRepository = filterRepository;
+        this.jmsTemplate = jmsTemplate;
     }
 
     @Override
@@ -41,8 +43,9 @@ public class FilterPrintJob extends QuartzJobBean {
             clientCountMap.put(client, clientCountMap.getOrDefault(client, 0) + 1);
         }
 
-        log.info("Log Count: {}", logCountMap);
-        log.info("Environment Count: {}", environmentCountMap);
-        log.info("Client Count: {}", clientCountMap);
+        String report = String.format("Log Count: %s%nEnvironment Count: %s%nClient Count: %s",
+                logCountMap, environmentCountMap, clientCountMap);
+        
+        jmsTemplate.convertAndSend(FILTERS_JMS_QUEUE, report);
     }
 }

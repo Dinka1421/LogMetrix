@@ -1,4 +1,4 @@
-package org.tvz.logmetrix.service.jobs;
+package org.tvz.logmetrix.process.jobs;
 
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
